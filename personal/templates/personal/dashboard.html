@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard de Gestión{% endblock %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; flex-direction:column; align-items:flex-start; margin-bottom:1rem;">
+    <h1 style="font-size: 1.8rem;">📊 Dashboard de Gestión</h1>
+    <a href="{% url 'gestion_horas' %}" class="button-nav" style="margin-top:0.5rem;">⬅️ Atrás</a>
+  </div>
+
+<a href="{% url 'estadisticas' %}" class="button" style="margin-top:2rem;">📊 Ver Estadísticas Mensuales</a>
+
+
+<!-- Tarjeta institucional para resumen de cargas -->
+<div style="margin-top:2rem; padding:1.5rem; border-radius:12px; background:#f0f4f8; box-shadow:0 2px 6px rgba(0,0,0,0.08); border-left:6px solid #2c3e50;">
+  <h2 style="color:#2c3e50; margin-bottom:0.5rem;">📎 Resumen de Cargas Mensuales</h2>
+  <p style="color:#444; margin-bottom:1.5rem;">
+    Registro Integral de cargas mensuales. Incluye archivo, fecha, hora, cantidad de efectivos y total de horas registradas.
+  </p>
+
+  <table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+    <thead style="background-color:#2c4550; color:white;">
+      <tr>
+        <th style="padding:0.75rem; text-align:left;">Mes de carga</th>
+        <th style="padding:0.75rem; text-align:left;">Fecha de carga</th>
+        <th style="padding:0.75rem; text-align:left;">Hora de carga</th>
+        <th style="padding:0.75rem; text-align:left;">Efectivos registrados</th>
+        <th style="padding:0.75rem; text-align:left;">Total de horas</th>
+        <th style="padding:0.75rem; text-align:left;">Emergencias asistidas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for carga in cargas_mensuales %}
+        <tr style="background-color:{% cycle '#ffffff' '#f7f9fc' %}; color:#222;">
+          <td style="padding:0.75rem;">
+            {% if carga.mes %}
+              <span style="color:#2c3e50; font-weight:500;">{{ carga.mes }}</span>
+            {% else %}
+              <span style="color:#888;">Sin mes registrado</span>
+            {% endif %}
+          </td>
+          <td style="padding:0.75rem;">{{ carga.fecha_carga|date:"d/m/Y" }}</td>
+          <td style="padding:0.75rem;">{{ carga.fecha_carga|time:"H:i" }}</td>
+          <td style="padding:0.75rem;">{{ carga.efectivos_registrados }}</td>
+          <td style="padding:0.75rem;">{{ carga.total_horas }}</td>
+          <td style="padding:0.75rem;">{{ carga.total_emergencias }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" style="padding:1rem; text-align:center; color:#888;">No hay cargas registradas aún.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+  <table style="width:100%; margin-top:2rem; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color:#0a84ff; color:white;">
+        <th style="padding:0.5rem;">Código</th>
+        <th style="padding:0.5rem;">Nombre</th>
+        <th style="padding:0.5rem;">Grado</th>
+        <th style="padding:0.5rem;">Horas</th>
+        <th style="padding:0.5rem;">Emergencias</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bomberos %}
+      <tr style="background-color:#2c2c2e; color:white; border-bottom:1px solid #444;">
+        <td style="padding:0.5rem;">{{ b.codigo }}</td>
+        <td style="padding:0.5rem;">{{ b.nombres_apellidos }}</td>
+        <td style="padding:0.5rem;">{{ b.grado }}</td>
+        <td style="padding:0.5rem;">{{ b.horas_acumuladas }}</td>
+        <td style="padding:0.5rem;">{{ b.emergencias_asistidas }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% block title %}Estadísticas Mensuales{% endblock %}
+
+{% block content %}
+
+<!-- Encabezado -->
+<div class="card" style="margin-bottom:2rem;">
+  <div style="display:flex; flex-direction:column; align-items:flex-start;">
+    <a href="{% url 'dashboard' %}" class="button-nav" style="margin-bottom:1rem;">
+      ⬅️ Volver al Panel
+    </a>
+    <h2 style="color:#ffffff;">📊 Estadísticas Mensuales</h2>
+    <p style="margin-top:0.5rem; color:#ffffff;">
+      Visualización Integral de cargas mensuales: efectivos, horas y emergencias.
+    </p>
+  </div>
+</div>
+
+<!-- Filtros y gráficos -->
+<div class="card">
+  <form method="GET" style="margin-bottom:2rem;">
+    <label for="grado" style="font-weight:bold; color:#ffffff;">Filtrar por grado:</label>
+    <select name="grado" id="grado" style="padding:0.5rem; border-radius:8px; margin-left:1rem;">
+      <option value="">Todos</option>
+      {% for g in grados %}
+        <option value="{{ g.valor }}" {% if g.valor == grado_seleccionado %}selected{% endif %}>{{ g.nombre }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="button" style="margin-left:1rem;">Filtrar</button>
+  </form>
+
+  <div style="display:flex; flex-direction:column; gap:3rem; max-width:900px; margin:auto;">
+    <canvas id="graficoHoras"></canvas>
+    <canvas id="graficoEmergencias"></canvas>
+    <canvas id="graficoEfectivos"></canvas>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const datos = {{ resumen_mensual|safe }};
+  const meses = datos.map(item => item.mes);
+  const horas = datos.map(item => item.horas);
+  const emergencias = datos.map(item => item.emergencias);
+  const efectivos = datos.map(item => item.efectivos);
+
+  // 📊 Gráfico de Horas
+  new Chart(document.getElementById('graficoHoras'), {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Horas acumuladas',
+        data: horas,
+        backgroundColor: '#3498db'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Horas acumuladas por mes',
+          font: {
+            size: 18
+          },
+          color: '#ffffff'
+        },
+        legend: {
+          labels: {
+            color: '#ffffff'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        },
+        y: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        }
+      }
+    }
+  });
+
+  // 🔥 Gráfico de Emergencias
+  new Chart(document.getElementById('graficoEmergencias'), {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Emergencias asistidas',
+        data: emergencias,
+        backgroundColor: '#e74c3c',
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Emergencias asistidas por mes',
+          font: {
+            size: 18
+          },
+          color: '#ffffff'
+        },
+        legend: {
+          labels: {
+            color: '#ffffff'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        },
+        y: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        }
+      }
+    }
+  });
+
+  // 👥 Gráfico de Efectivos
+  new Chart(document.getElementById('graficoEfectivos'), {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Efectivos registrados',
+        data: efectivos,
+        backgroundColor: '#27ae60'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Efectivos registrados por mes',
+          font: {
+            size: 18
+          },
+          color: '#ffffff'
+        },
+        legend: {
+          labels: {
+            color: '#ffffff'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        },
+        y: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

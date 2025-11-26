@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Iniciar sesión — SiGROB 2.0{% endblock %}
+{% block content %}
+<div class="card" style="background-color:#1e1e1e; padding:2rem; border-radius:10px; max-width:400px; margin:auto;">
+  <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">🔐 Iniciar sesión</h1>
+  <p style="color:#aaa; margin-bottom:1.5rem; font-size:0.95rem;">
+    Bienvenido al <strong>Sistema Integral de Gestión de Reportes Operativos de Bomberos</strong>.
+  </p>
+  <p style="color:#aaa; margin-bottom:2rem; font-size:0.95rem;">
+    Por favor ingrese sus credenciales para continuar.
+  </p>
+  
+  {% if form.errors %}
+  <div style="background-color:#2c2c2c; color:#ff5555; padding:1rem; border-radius:5px; margin-bottom:1.5rem;">
+    ❌ Usuario o contraseña incorrectos. Por favor verifique sus datos.
+  </div>
+  {% endif %}
+
+  <form method="post" style="display:flex; flex-direction:column; gap:1rem;">
+    {% csrf_token %}
+
+    <label for="id_username" style="color:#ccc;">👤 Nombre de usuario:</label>
+    <input type="text" name="username" id="id_username" required style="padding:0.5rem; border-radius:5px; border:none; width:100%;">
+
+    <label for="id_password" style="color:#ccc;">🔒 Contraseña:</label>
+    <input type="password" name="password" id="id_password" required style="padding:0.5rem; border-radius:5px; border:none; width:100%;">
+
+    <div style="display:flex; gap:1rem; margin-top:1rem;">
+      <button type="submit" class="button" style="flex:1;">Ingresar</button>
+      <a href="{% url 'inicio' %}" class="button" style="flex:1; background-color:#444;">⬅️ Volver a Inicio</a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+

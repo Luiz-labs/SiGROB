@@ -1,0 +1,315 @@
+.card-dark {
+  background-color: #3d3e3e;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.button {
+  background: #3498db;
+  color: #fff;
+  border: 0;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.resumen-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resumen-label { font-weight: 600; }
+.resumen-value { font-size: 1.4rem; font-weight: 700; }
+.doc-list { list-style: none; padding: 0; }
+.doc-item { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+/* Encabezado y cuerpo de documentos */
+.doc-header { padding: 1.5rem 1.5rem 1rem; }
+.doc-header-top { display: flex; justify-content: flex-start; margin-bottom: 0.8rem; }
+.doc-title { margin: 0.2rem 0 0.4rem; font-size: 1.6rem; }
+.doc-subtitle { color: #d5d5d5; margin: 0.2rem 0 1rem; }
+.doc-actions { display: flex; gap: 0.8rem; }
+
+.doc-body { margin-top: 1rem; padding: 1.2rem 1.5rem; }
+.doc-section-title { margin: 0; font-size: 1.2rem; }
+
+/* Botones */
+.button-outline {
+  background: transparent;
+  color: #0a84ff;
+  border: 1px solid #0a84ff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.button-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 0;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.button-secondary:hover { background: rgba(255,255,255,0.18); }
+
+/* Lista de documentos */
+.doc-list { list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.doc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.doc-item-left { display: flex; flex-direction: column; gap: 0.2rem; }
+.doc-item-title { font-weight: 700; }
+.doc-item-meta { color: #cfcfcf; font-size: 0.92rem; }
+.doc-item-actions { display: flex; gap: 0.5rem; }
+.doc-item-empty { color: #d5d5d5; padding: 0.8rem 0; }
+
+/* Grid de resumen (ya tenías, lo dejamos consistente) */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+.resumen-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.resumen-label { font-weight: 600; }
+.resumen-value { font-size: 1.4rem; font-weight: 700; }
+
+/* Encabezado institucional */
+.doc-header { padding: 1.5rem 1.5rem 1rem; margin-bottom: 1.5rem; }
+.doc-header-top { display: flex; justify-content: flex-start; margin-bottom: 0.8rem; }
+.doc-title { margin: 0.2rem 0 0.4rem; font-size: 1.6rem; }
+.doc-subtitle { color: #d5d5d5; margin: 0.2rem 0 1rem; }
+.doc-actions { display: flex; gap: 0.8rem; }
+
+/* Cuerpo del módulo */
+.doc-body { padding: 1.2rem 1.5rem; }
+.doc-section-title { margin: 0; font-size: 1.2rem; }
+
+/* Botones */
+.button-outline {
+  background: transparent;
+  color: #0a84ff;
+  border: 1px solid #0a84ff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.button-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 0;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.button-secondary:hover { background: rgba(255,255,255,0.18); }
+
+/* Lista de documentos */
+.doc-list { list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.doc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.doc-item-left { display: flex; flex-direction: column; gap: 0.2rem; }
+.doc-item-title { font-weight: 700; }
+.doc-item-meta { color: #cfcfcf; font-size: 0.92rem; }
+.doc-item-actions { display: flex; gap: 0.5rem; }
+.doc-item-empty { color: #d5d5d5; padding: 0.8rem 0; }
+
+/* Grid de resumen con colores */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+.resumen-item {
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.resumen-label { font-weight: 600; }
+.resumen-value { font-size: 1.4rem; font-weight: 700; }
+
+.resumen-pendiente { background: #2c3e50; }
+.resumen-observado { background: #f39c12; }
+.resumen-aprobado { background: #27ae60; }
+.resumen-total { background: #7f8c8d; }
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #2c2c2e;
+  color: white;
+  font-size: 1rem;
+}
+
+.input-field-tall {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #2c2c2e;
+  color: white;
+  font-size: 1rem;
+}
+
+/* Contenedor del formulario */
+.form-wrap {
+  display: block;
+}
+
+/* Grupo con aire visual */
+.form-group {
+  margin-bottom: 1.6rem;
+}
+
+/* Etiquetas con separación clara */
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.6rem;
+}
+
+/* Campos: select, input, textarea */
+.card-dark select,
+.card-dark input[type="text"],
+.card-dark input[type="file"],
+.card-dark textarea {
+  width: 100%;
+  background-color: #2c2c2e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;           /* Esquinas redondeadas */
+  padding: 0.95rem 1rem;         /* Altura mayor para TIPO y TÍTULO */
+  font-size: 1rem;
+}
+
+/* Altura específica para textarea */
+.card-dark textarea {
+  height: 90px;             /* Más alto y cómodo */
+  padding: 0.75rem;
+  resize: vertical;  
+}
+
+/* Separación extra para el input archivo */
+.card-dark input[type="file"] {
+  padding: 0.8rem;               /* Espaciado interno */
+  background-color: #1f1f21;     /* Sutil contraste para archivo */
+  border: 1px solid #3b3b3d;     /* Delinea sin romper el tema */
+}
+
+/* Opcional: foco accesible */
+.card-dark select:focus,
+.card-dark input[type="text"]:focus,
+.card-dark input[type="file"]:focus,
+.card-dark textarea:focus {
+  outline: 2px solid #0a84ff;
+  outline-offset: 2px;
+}
+
+.card-dark .form-group select,
+.card-dark .form-group input[type="text"],
+.card-dark .form-group textarea,
+.card-dark .form-group input[type="file"] {
+  width: 100%;
+  max-width: 640px;
+  display: block;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background-color: #2c2c2e;
+  color: white;
+  border: none;
+  font-size: 1rem;
+}
+
+.card-dark input[type="file"] {
+  width: 100%;
+  max-width: 640px;
+  display: block;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background-color: #2c2c2e;
+  color: white;
+  border: none;
+  font-size: 1rem;
+}
+
+.notificaciones-stack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.notificacion-flotante {
+  background-color: #f2f2f7; /* gris claro estilo macOS */
+  color: #1c1c1e; /* texto oscuro institucional */
+  padding: 0.9rem 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  border-left: 4px solid #0a84ff; /* borde azul institucional */
+  position: relative;
+}
+
+
+.notificacion-flotante p {
+  margin: 0;
+  padding-right: 1.6rem;
+}
+
+.notificacion-flotante .cerrar {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #b3b3b3;
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.notificacion-flotante .cerrar:hover {
+  color: #fff;
+}
