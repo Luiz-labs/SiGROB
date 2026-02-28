@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block title %}Reporte de Cumplimiento{% endblock %}
+{% block content %}
+
+<!-- Tarjeta principal con título y descripción -->
+<div class="card" style="margin-bottom:2rem;">
+  <div style="display:flex; flex-direction:column; align-items:flex-start;">
+    <a href="{% url 'gestion_horas' %}" class="button-nav" style="margin-bottom:1rem;">
+      ⬅️ Volver al Panel
+    </a>
+    <h1 style="font-size: 1.8rem;">
+      📈 Reporte de Cumplimiento {% if modo == 'trimestral' %}Trimestral{% else %}Anual{% endif %}
+    </h1>
+    <p style="color:#fdfcfc; margin-top:0.5rem;">
+      Esta vista muestra el cumplimiento operativo según el modo de evaluación seleccionado. Puedes regresar al panel para acceder a otros módulos.
+    </p>
+  </div>
+</div>
+
+<!-- Contenedor de filtros y metas -->
+<div class="card" style="margin-bottom: 2rem;">
+  <form method="GET">
+    <!-- Primera fila: filtros -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-end; justify-content: space-between;">
+      <div style="flex: 1 1 300px;">
+        <label style="display:block; margin-bottom:0.5rem; font-weight:bold; color:#fdfcfc;">Modo de evaluación:</label>
+        <div class="toggle-container">
+          <input type="radio" id="trimestral" name="modo" value="trimestral" {% if modo == 'trimestral' %}checked{% endif %}>
+          <label for="trimestral">Trimestral</label>
+          <input type="radio" id="anual" name="modo" value="anual" {% if modo == 'anual' %}checked{% endif %}>
+          <label for="anual">Anual</label>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 300px;">
+        <label for="grado" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:#fdfcfc;">Filtrar por grado:</label>
+        <select name="grado" id="grado" style="padding:0.5rem; border-radius:8px; width:100%;">
+          <option value="">Todos</option>
+          {% for g in grados %}
+            <option value="{{ g }}" {% if g == grado_seleccionado %}selected{% endif %}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div style="flex: 0 1 auto;">
+        <button type="submit" class="button">Filtrar</button>
+      </div>
+    </div>
+
+    <!-- Segunda fila: guía de metas -->
+    <div style="background-color:#f9f9f9; border-left:4px solid #2c3e50; border-radius:6px; padding:1rem; margin-top:2rem;">
+      <h4 style="margin-bottom:1rem; color:#2c3e50;">Guía de metas por grado</h4>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+        {% for grado, meta in metas_filtradas.items %}
+          <div style="background-color:#fff; border:1px solid #ddd; border-radius:6px; padding:0.75rem;">
+            <strong style="color:#2c3e50;">{{ grado }}</strong><br>
+            <span style="color:#555;">
+              {% if modo == 'trimestral' and meta.trimestral %}
+                {{ meta.trimestral }} horas trimestrales
+              {% else %}
+                {{ meta.anual }} horas anuales
+              {% endif %}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Resumen visual -->
+{% if resumen %}
+<div style="background-color: #ffffff; border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 0 6px rgba(0,0,0,0.1);">
+  <p style="margin-bottom: 0.5rem; font-weight: bold; color: #000;">
+    📊 Se muestran {{ resumen.cantidad }} efectivos del grado {{ resumen.grado }}.
+  </p>
+  <p style="margin-bottom: 1rem; color: #000;">
+    ✅ {{ resumen.cumplen }} cumplieron la meta {{ resumen.modo }}. Promedio de cumplimiento: {{ resumen.promedio }}%.
+  </p>
+  <div style="background-color: #e0e0e0; border-radius: 6px; height: 24px; overflow: hidden; position: relative;">
+    <div style="
+      width: {{ resumen.promedio|floatformat:0 }}%;
+      max-width: 100%;
+      background-color: #2c3e50;
+      height: 100%;
+      transition: width 0.5s ease-in-out;
+    "></div>
+    <span style="
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #2007f9;
+      line-height: 24px;
+    ">
+      {{ resumen.promedio }}%
+    </span>
+  </div>
+</div>
+{% endif %}
+
+<!-- Tabla o mensaje -->
+{% if reporte %}
+  <div class="card">
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color:#0a84ff; color:white;">
+          <th style="padding:0.5rem;">Código</th>
+          <th style="padding:0.5rem;">Nombre</th>
+          <th style="padding:0.5rem;">Grado</th>
+          <th style="padding:0.5rem;">Horas</th>
+          <th style="padding:0.5rem;">Meta anual</th>
+          <th style="padding:0.5rem;">Cumplimiento</th>
+          <th style="padding:0.5rem;">Control Trimestral</th>
+          <th style="padding:0.5rem;">Control Anual</th>
+          <th style="padding:0.5rem;">Control Institucional</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in reporte %}
+        <tr style="background-color:#2c2c2e; color:white; border-bottom:1px solid #444;">
+          <td style="padding:0.5rem;">{{ b.codigo }}</td>
+          <td style="padding:0.5rem;">
+            <span onclick="mostrarDetalle('{{ b.nombre }}', {{ b.horas_faltantes }})" style="cursor:pointer; color:#0a84ff;">
+              {{ b.nombre }}
+            </span>
+          </td>
+          <td style="padding:0.5rem;">{{ b.grado }}</td>
+          <td style="padding:0.5rem;">{{ b.horas }}</td>
+          <td style="padding:0.5rem;">{{ b.meta_anual }}</td>
+          <td style="padding:0.5rem;">
+            <div style="background-color:#444; border-radius:8px; overflow:hidden;">
+              <div style="width:{{ b.cumplimiento }}%; background-color:#0a84ff; padding:0.3rem; text-align:center;">
+                {{ b.cumplimiento }}%
+              </div>
+            </div>
+          </td>
+          <td style="padding:0.5rem; text-align:center;">{% if b.meta_trimestral %}{% if b.cumple_trimestral %}✅{% else %}❌{% endif %}{% else %}—{% endif %}</td>
+          <td style="padding:0.5rem; text-align:center;">{% if b.cumple_anual %}✅{% else %}❌{% endif %}</td>
+          <td style="padding:0.5rem; text-align:center;">{% if b.cumple_general %}✅{% else %}❌{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Resumen total -->
+    <div style="margin-top:2rem; text-align:right; font-weight:bold; color:#fdfcfc;">
+      Total de horas acumuladas: {{ total_horas }}<br>
+      Total de emergencias asistidas: {{ total_emergencias }}
+    </div>
+  </div>
+{% else %}
+  <div class="card" style="padding:2rem; text-align:center; color:#888;">
+    <p>No hay datos disponibles. Carga un archivo para comenzar.</p>
+  </div>
+{% endif %}
+
+<!-- Popup -->
+<div id="popup" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%); background-color:#2c2c2e; color:white; padding:2rem; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.5); z-index:1000;">
+  <p id="popup-text"></p>
+  <button onclick="cerrarPopup()" class="button" style="margin-top:1rem;">Cerrar</button>
+</div>
+
+<script>
+  function mostrarDetalle(nombre, faltantes) {
+    document.getElementById('popup-text').innerText = nombre + " necesita " + faltantes + " horas para cumplir su meta anual.";
+    document.getElementById('popup').style.display = 'block';
+  }
+  function cerrarPopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+</script>
+
+{% endblock %}

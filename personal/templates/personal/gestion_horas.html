@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Gestión de Horas — SiGROB 2.0{% endblock %}
+{% block content %}
+<div class="card">
+  <!-- Título y botón de regreso -->
+  <div style="display:flex; flex-direction:column; align-items:flex-start; margin-bottom:1rem;">
+    <a href="{% url 'inicio' %}" class="button" style="margin-top:0.5rem; padding:0.7rem 1.5rem; font-size:1.05rem;">⬅️ Ir a Inicio</a>
+    <h1 style="font-size: 1.8rem;">📘 Gestión de Horas</h1>
+  </div>
+
+<!-- Botones alineados horizontalmente -->
+  <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin-top:2rem;">
+    <a href="{% url 'carga_horas' %}" class="button-large" style="flex: 1 1 220px; max-width:240px;">📥 Cargar Horas</a>
+    <a href="{% url 'dashboard' %}" class="button-large" style="flex: 1 1 220px; max-width:240px;">📊 Dashboard</a>
+    <a href="{% url 'reporte_cumplimiento' %}" class="button-large" style="flex: 1 1 220px; max-width:240px;">📈 Reporte de Cumplimiento</a>
+  </div>
+</div>
+{% endblock %}

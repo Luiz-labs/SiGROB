@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}📄 Gestión documentaria{% endblock %}
+
+{% block head %}
+  <!-- Si necesitas estilos adicionales específicos para esta vista, agrégalos aquí -->
+{% endblock %}
+
+{% block content %}
+<!-- 🟦 Contenedor 1: Encabezado institucional -->
+<div class="card-dark" style="padding: 2rem;">
+  <div style="margin-bottom: 1.5rem;">
+    <a href="{% url 'inicio' %}" class="button-nav">← Volver atrás</a>
+  </div>
+
+  <h2 style="margin-bottom: 1.4rem;">📁 Gestión documentaria</h2>
+
+  <p style="margin-bottom: 2rem;">
+    Administra tus constancias, certificados y acreditaciones. Mantén tu información al día para facilitar la revisión institucional.
+  </p>
+
+  <div style="margin-bottom: 0.4rem;">
+    <a href="{% url 'documentos_subir' %}" class="button">Subir documento</a>
+  </div>
+</div>
+
+<!-- 🟨 Contenedor 2: Resumen y listado -->
+<div class="card-dark doc-body">
+  <h3 class="doc-section-title">Resumen documentario</h3>
+
+  <div class="resumen-grid">
+    <div class="resumen-item resumen-pendiente">
+      <span class="resumen-label">Pendientes</span>
+      <span class="resumen-value">{{ counts.pendientes }}</span>
+    </div>
+    <div class="resumen-item resumen-observado">
+      <span class="resumen-label">Observados</span>
+      <span class="resumen-value">{{ counts.observados }}</span>
+    </div>
+    <div class="resumen-item resumen-aprobado">
+      <span class="resumen-label">Aprobados</span>
+      <span class="resumen-value">{{ counts.aprobados }}</span>
+    </div>
+    <div class="resumen-item resumen-total">
+      <span class="resumen-label">Total</span>
+      <span class="resumen-value">{{ counts.total }}</span>
+    </div>
+  </div>
+
+  <h3 class="doc-section-title" style="margin-top: 1.5rem;">Mis documentos</h3>
+  <ul class="doc-list">
+    {% for d in documentos %}
+      <li class="doc-item">
+        <div class="doc-item-left">
+          <strong class="doc-item-title">{{ d.titulo }}</strong>
+          <span class="doc-item-meta">• {{ d.get_tipo_display }} • Estado: {{ d.get_estado_display }}</span>
+        </div>
+        <div class="doc-item-actions">
+          <a class="button-secondary" href="{{ d.archivo.url }}" target="_blank">Ver</a>
+          <a class="button-secondary" href="{% url 'documentos_detalle' d.pk %}">Detalle</a>
+          {% if perms.app_documentos.change_documento %}
+            <a class="button-secondary" href="{% url 'documentos_revisar' d.pk %}">Revisar</a>
+          {% endif %}
+        </div>
+      </li>
+    {% empty %}
+      <li class="doc-item-empty">No tienes documentos cargados.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+
+
+

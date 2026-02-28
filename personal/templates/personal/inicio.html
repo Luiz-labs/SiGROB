@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio — SiGROB 2.0{% endblock %}
+
+{% block head %}
+  <!-- Si necesitas estilos adicionales, agrégalos aquí -->
+{% endblock %}
+
+{% block content %}
+<div class="card-dark" style="padding-top: 2rem; padding-bottom: 2rem;">
+
+  <!-- Logo institucional -->
+  <div style="text-align: center; margin-bottom: 1rem;">
+    <img src="{% static 'img/sigro_logo.png' %}" alt="Logo SiGRO" style="height: 160px;">
+    <div style="font-size: 1rem; color: #d5d5d5; margin-top: 0.5rem;">
+      <strong>SiGROB 2.0</strong> — Sistema Integral de Gestión de Reportes Operativos de Bomberos
+    </div>
+  </div>
+
+  <!-- Título principal -->
+  <h1 style="font-size: 1.8rem; margin: 2rem 0 1.5rem 0; text-align: center;">🏠 INICIO — PANEL DE TRABAJO INTEGRAL</h1>
+
+  <!-- Sesión -->
+  {% if user.is_authenticated %}
+    <div style="margin-bottom:1.5rem; font-size:0.95rem; color:#ccc; text-align: center;">
+      👤 Sesión iniciada como <strong>{{ user.username }}</strong> |
+      <a href="{% url 'logout' %}" style="color:#0a84ff;">Cerrar sesión</a> |
+      <a href="{% url 'password_change' %}" style="color:#0a84ff;">Cambiar clave</a>
+    </div>
+  {% else %}
+    <div style="margin-bottom:1.5rem; font-size:0.95rem; color:#ccc; text-align: center;">
+      🔐 <a href="{% url 'login' %}" style="color:#0a84ff;">Iniciar sesión</a>
+    </div>
+  {% endif %}
+
+  <!-- Botones -->
+  <div style="display:flex; gap:2rem; justify-content:center; margin-top: 2rem;">
+    <a href="{% url 'gestion_horas' %}" class="button" style="width:300px; padding:1rem 1.5rem;">📘 GESTIÓN DE HORAS</a>
+    <a href="{% url 'documentos_lista' %}" class="button" style="width:300px; padding:1rem 1.5rem;">📁 GESTIÓN DOCUMENTARIA</a>
+  </div>
+
+  <!-- Notificaciones -->
+  {% if notificaciones %}
+  <div class="notificaciones-stack">
+
+    <div class="notificacion-mac" onclick="window.location.href='{{ url_documentos }}'">
+
+      <div class="notif-header">
+        <strong>SiGROB</strong>
+        <button class="cerrar" onclick="event.stopPropagation(); this.parentElement.parentElement.remove()">×</button>
+      </div>
+
+      <div class="notif-body">
+        📂 Tienes actividad en gestión documentaria
+      </div>
+
+      <div class="notif-footer">
+        <button class="mostrar-mas" onclick="event.stopPropagation(); document.getElementById('detalleNotif').classList.toggle('visible')">
+          Mostrar más
+        </button>
+      </div>
+
+      <div id="detalleNotif" class="notif-detalle">
+        📄 Pendientes: {{ total_pendientes }}<br>
+        ⚠️ Observados: {{ total_observados }}<br>
+        ⏳ Por vencer: {{ total_por_vencer }}
+      </div>
+
+    </div>
+
+  </div>
+  {% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const toast = document.querySelector(".notificacion-mac");
+
+    if(!toast) return;
+
+    const audio = new Audio("/static/sounds/notify.mp3");
+
+    // Intento 1: reproducir al cargar
+    audio.play().catch(() => {
+
+        // Si el navegador bloquea, reproducir al primer click del usuario
+        const activarSonido = () => {
+            audio.play().catch(()=>{});
+            document.removeEventListener("click", activarSonido);
+        };
+
+        document.addEventListener("click", activarSonido);
+    });
+
+    // CLICK NOTIFICACION → ir a documentos
+    toast.addEventListener("click", function(){
+        window.location.href = "{{ url_documentos }}";
+    });
+
+});
+</script> 
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const stack = document.querySelector('.notificaciones-stack');
+    if (!stack) return;
+    setTimeout(() => {
+      stack.style.display = 'none';
+    }, 15000); // Oculta las notificaciones después de 6 segundos
+  });
+</script>
+{% endblock %}
+
+<script>
+setTimeout(() => {
+  document.querySelectorAll('.notificacion-flotante').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-10px)';
+      setTimeout(()=>el.remove(), 300);
+  });
+}, 5000);
+</script>
+
+<script>
+function toggleDetalleNotif(){
+    const detalle = document.getElementById("detalle-notif");
+    if(detalle.style.display === "none"){
+        detalle.style.display = "block";
+    } else {
+        detalle.style.display = "none";
+    }
+}
+</script>

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}📄 Detalle de documento{% endblock %}
+
+{% block content %}
+<div class="card-dark" style="padding: 2rem; border-radius: 16px;">
+
+  <!-- 🔙 Botón de volver atrás -->
+  <div style="margin-bottom: 1.5rem;">
+    <a href="{% url 'documentos_lista' %}" class="button-nav">← Volver atrás</a>
+  </div>
+
+  <h2 style="margin-bottom: 1rem;">{{ doc.titulo }}</h2>
+
+  <p><strong>Tipo:</strong> {{ doc.get_tipo_display }}</p>
+  <p><strong>Estado:</strong> {{ doc.get_estado_display }}</p>
+  <p><strong>Archivo:</strong> <a href="{{ doc.archivo.url }}" target="_blank">Ver/descargar</a></p>
+
+  {% if perms.app_documentos.change_documento %}
+    <form method="post" action="{% url 'documentos_revisar' doc.pk %}" style="margin-top: 2rem;">
+      {% csrf_token %}
+
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+        <label for="estado" style="font-weight: bold;">Actualizar estado:</label>
+
+        <select name="estado" id="estado" style="min-width: 160px; max-width: 240px; padding: 0.4rem; border-radius: 8px;">
+          {% for key,label in doc.ESTADO_CHOICES %}
+            <option value="{{ key }}" {% if key == doc.estado %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+
+        <button type="submit" class="button" style="padding: 0.5rem 1rem;">Actualizar</button>
+      </div>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}
