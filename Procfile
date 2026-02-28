@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py crearadmin && gunicorn sigro_core.wsgi
+web: python manage.py migrate && python sigro_core/create_superuser.py && gunicorn sigro_core.wsgi

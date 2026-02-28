@@ -236,6 +236,7 @@ function mostrarToast(titulo, mensaje, url=null){
     // desaparecer solo
     setTimeout(()=> toast.remove(), 6000);
 }
+
 </script>
 
 <div id="toast-container"></div>
@@ -243,15 +244,12 @@ function mostrarToast(titulo, mensaje, url=null){
   <source src="{% static 'sounds/notify.mp3' %}" type="audio/mpeg">
 </audio>
 
-if 'toast' in request.session:
-    del request.session['toast']
-
-{% if request.session.toast %}
+{% if toast %}
 <script>
 mostrarToast(
-    "{{ request.session.toast.titulo }}",
-    "{{ request.session.toast.mensaje }}",
-    "{{ request.session.toast.url }}"
+    "{{ toast.titulo }}",
+    "{{ toast.mensaje }}",
+    "{{ toast.url }}"
 );
 </script>
 {% endif %}
