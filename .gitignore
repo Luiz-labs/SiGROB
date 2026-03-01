@@ -41,3 +41,27 @@ cargas/
 # Archivos temporales
 *.tmp
 *.bak
+
+# Entorno virtual
+env/
+
+# Base de datos local
+db.sqlite3
+
+# Archivos de usuario
+media/
+
+# Credenciales sensibles
+credenciales/
+
+# Archivos temporales
+*.log
+*.sqlite3
+*.pyc
+__pycache__/
+
+# Mac
+.DS_Store
+
+# Archivos de carga local
+cargas/
