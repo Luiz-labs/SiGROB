@@ -1,0 +1,111 @@
+===============================
+AUDITORÍA TÉCNICA SIGROB v1
+===============================
+
+OBJETIVO:
+Ordenar el proyecto, eliminar código muerto, asegurar despliegue estable
+y dejar base sólida para producción.
+
+-------------------------------------------------
+ESTRUCTURA FINAL DESEADA DEL PROYECTO
+-------------------------------------------------
+
+sigrob/
+│
+├── sigro_core/              ← Configuración Django (SE QUEDA)
+│
+├── personal/                ← App usuarios, asistencia, panel (SE QUEDA)
+│
+├── app_documentos/          ← App documentos + Drive (SE QUEDA)
+│
+├── templates/               ← Solo si luego centralizamos templates
+│
+├── static/                  ← Archivos estáticos propios
+├── staticfiles/             ← Generados por collectstatic (SE QUEDA)
+│
+├── media/                   ← Archivos subidos (SE QUEDA, NO VERSIONAR)
+│
+├── manage.py                ← SE QUEDA
+├── requirements.txt         ← SE QUEDA
+├── Procfile                 ← SE QUEDA
+├── .gitignore               ← SE QUEDA
+│
+└── SIGROB_AUDITORIA.txt     ← Documento de control
+
+-------------------------------------------------
+CARPETAS QUE NO DEBEN VERSIONARSE
+-------------------------------------------------
+
+env/
+db.sqlite3
+credenciales/
+media/documentos/
+.DS_Store
+cargas/*.xlsx
+__pycache__/
+*.pyc
+
+-------------------------------------------------
+ARCHIVOS SOSPECHOSOS DE CÓDIGO MUERTO
+(Se revisarán antes de borrar)
+
+sigro_core/create_superuser.py
+personal/scripts.py
+app_documentos/drive_service.py
+personal/management/command/
+
+-------------------------------------------------
+FASE 1 – LIMPIEZA DE REPOSITORIO
+-------------------------------------------------
+
+1. Confirmar que .gitignore ignore lo correcto
+2. Eliminar del repo archivos locales innecesarios
+3. Confirmar que Render deploya limpio
+
+-------------------------------------------------
+FASE 2 – AUDITORÍA DE CÓDIGO
+-------------------------------------------------
+
+Revisión línea por línea de:
+
+settings.py
+urls.py
+models.py
+views.py
+forms.py
+
+Objetivos:
+
+- eliminar imports innecesarios
+- detectar lógica duplicada
+- mejorar seguridad
+- mejorar estructura
+- dejar código mantenible
+
+-------------------------------------------------
+FASE 3 – HARDENING DE PRODUCCIÓN
+-------------------------------------------------
+
+- variables de entorno reales
+- logging
+- manejo de errores
+- control de permisos
+- preparación para PostgreSQL
+
+-------------------------------------------------
+ESTADO ACTUAL DEL PROYECTO
+-------------------------------------------------
+
+✔ SIGROB local funciona
+✔ SIGROB online funciona
+✔ Login operativo
+✔ Documentos suben localmente
+⚠ Drive aún no sincroniza correctamente
+⚠ Proyecto necesita limpieza estructural
+
+-------------------------------------------------
+SIGUIENTE ACCIÓN
+-------------------------------------------------
+
+Revisar y optimizar .gitignore
+para limpiar el repositorio.

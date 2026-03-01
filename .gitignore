@@ -1,6 +1,43 @@
-credenciales/
+# ===============================
+# SIGROB .gitignore profesional
+# ===============================
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Entorno virtual
 env/
+venv/
+.venv/
+
+# Django
 db.sqlite3
 media/
 staticfiles/
+
+# Archivos locales
 .DS_Store
+*.log
+
+# Credenciales sensibles
+credenciales/
+*.json
+*.pickle
+
+# Archivos de carga manual
+cargas/
+
+# VS Code
+.vscode/
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Archivos temporales
+*.tmp
+*.bak
