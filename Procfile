@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn sigro_core.wsgi
+web: python manage.py migrate && python sigro_core/init_admin.py && gunicorn sigro_core.wsgi
